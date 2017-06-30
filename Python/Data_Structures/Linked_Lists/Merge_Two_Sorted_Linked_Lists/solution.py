@@ -38,15 +38,10 @@ def MergeLists(headA, headB):
                 temp0.next = temp1
                 temp0 = temp1
                 temp1 = temp1.next
-        while temp1:
+		if temp1:
             temp0.next = temp1
-            temp0 = temp1
-            temp1 = temp1.next
-        while temp2:
+        if temp2:
             temp0.next = temp2
-            temp0 = temp2
-            temp2 = temp2.next
-        temp0.next = None
         return head
     else:
         if temp1:
