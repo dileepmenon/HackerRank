@@ -1,4 +1,8 @@
 #!/bin/python3
+import sys
+
+
+store = {}
 
 
 def getWays(n, c):
@@ -11,7 +15,13 @@ def getWays(n, c):
             return 1
     n_new = n - c[0]
     c_new = [i for i in c if i<= n_new]
-    return getWays(n_new, c_new[:]) + getWays(n, c[1:])
+    try:
+        d = store[(c[0], len(c), n)]
+        return d
+    except:
+        s = getWays(n_new, c_new[:]) + getWays(n, c[1:])
+        store[(c[0], len(c), n)] = s
+        return s
 
 
 n, m = input().strip().split(' ')
