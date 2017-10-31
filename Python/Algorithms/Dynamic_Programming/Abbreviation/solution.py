@@ -1,34 +1,36 @@
 #!/bin/python
 
-# For larger test cases, due to many recursive calls will get RunTime Error.
-# Better to write a Bottom Up approach (Iterative Solution) for below code
-
-
 
 def abbreviation(a, b):
-    if not a and not b:
+    return get_abbrev(a, b, 0, 0)
+
+
+def get_abbrev(a, b, i1, i2):
+    while i1 < len(a) and i2 < len(b):
+        try:
+            return d[(a[i1:], b[i2:])]
+        except:
+            if a[i1] == b[i2]:
+                i1 += 1
+                i2 += 1
+            elif a[i1] == b[i2].lower():
+                s = get_abbrev(a, b, i1+1, i2+1) or get_abbrev(a, b, i1+1, i2)
+                d[(a[i1:], b[i2:])] = s
+                return s
+            else:
+                if a[i1] == a[i1].upper():
+                    return False
+                else:
+                    i1 += 1
+    if i1 >= len(a) and i2 >= len(b):
         return True
-    if not a and b:
+    if i1 >= len(a) and i2 < len(b):
         return False
-    if a and not b:
-        if a == a.lower():
+    if i1 < len(a) and i2 >= len(b):
+        if a[i1:] == a[i1:].lower():
             return True
         else:
             return False
-    try:
-        return d[(a, b)]
-    except:
-        if a[-1] == b[-1]:
-            s = abbreviation(a[:-1], b[:-1])
-        elif a[-1] == b[-1].lower():
-            s = (abbreviation(a[:-1], b[:-1]) or abbreviation(a[:-1], b[:]))
-        else:
-            if a[-1] == a[-1].upper():
-                return False
-            else:
-                s = abbreviation(a[:-1], b[:])
-        d[(a, b)] = s
-        return s
 
 
 if __name__ == "__main__":
